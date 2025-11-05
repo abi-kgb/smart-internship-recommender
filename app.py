@@ -6,7 +6,6 @@ app = Flask(__name__)
 recommendations = {
     "web": {
         "bg": "https://static.vecteezy.com/system/resources/previews/000/523/309/original/web-development-and-programming-coding-concept-seo-optimization-modern-web-design-on-laptop-screen-vector.jpg",
-        "gif": "https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif",
         "languages": ["HTML", "CSS", "JavaScript", "Python (Flask/Django)"],
         "certifications": [
             {"name": "W3Schools Web Development", "link": "https://www.w3schools.com/cert/default.asp"},
@@ -30,7 +29,6 @@ recommendations = {
     },
     "ai": {
         "bg": "https://en.sepoin.com/wp-content/uploads/2020/01/AI-ML-4.jpg",
-        "gif": "https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif",
         "languages": ["Python", "R"],
         "certifications": [
             {"name": "IBM AI Engineering Certificate", "link": "https://www.coursera.org/professional-certificates/ai-engineer"},
@@ -54,7 +52,6 @@ recommendations = {
     },
     "cloud": {
         "bg": "https://cdn.pixabay.com/photo/2024/01/26/08/07/ai-generated-8533603_1280.jpg",
-        "gif": "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif",
         "languages": ["Python", "Java", "Bash", "YAML"],
         "certifications": [
             {"name": "AWS Cloud Practitioner", "link": "https://aws.amazon.com/certification/certified-cloud-practitioner/"},
@@ -78,7 +75,6 @@ recommendations = {
     },
     "cybersecurity": {
         "bg": "https://images.wallpapersden.com/image/download/cybersecurity-core_bmdrZ2mUmZqaraWkpJRmbmdsrWZlbWU.jpg",
-        "gif": "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif",
         "languages": ["Python", "C", "C++", "Bash"],
         "certifications": [
             {"name": "EC-Council Ethical Hacking", "link": "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/"},
@@ -102,7 +98,6 @@ recommendations = {
     },
     "devops": {
         "bg": "https://www.tekcent.com/media/yncjty2t/devops-1600x900-1423173157.jpg",
-        "gif": "https://media.giphy.com/media/fwbzI2kV3Qrlpkh59e/giphy.gif",
         "languages": ["Python", "Bash", "YAML", "Dockerfile", "Groovy (Jenkins)"],
         "certifications": [
             {"name": "Docker & Kubernetes Certification", "link": "https://www.coursera.org/specializations/docker-kubernetes"},
@@ -123,6 +118,29 @@ recommendations = {
                 {"title": "Jenkins CI/CD Pipeline Automation", "link": "https://www.jenkins.io/doc/book/pipeline/"},
             ],
         }
+    },
+    "robotics": {
+        "bg": "https://tse4.mm.bing.net/th/id/OIP.CgeybFxfhad-Jo8HU0HpfwHaD5?pid=Api&P=0&h=180",
+        "languages": ["C++", "Python", "Arduino", "ROS"],
+        "certifications": [
+            {"name": "ROS Robotics Certification", "link": "https://www.coursera.org/learn/robotics"},
+            {"name": "Arduino Fundamentals", "link": "https://www.arduino.cc/en/Tutorial/HomePage"}
+        ],
+        "internships": ["Robotics Intern", "Embedded Systems Trainee"],
+        "projects": {
+            "Beginner": [
+                {"title": "Line Following Robot", "link": "https://www.instructables.com/Line-Following-Robot/"},
+                {"title": "Obstacle Avoidance Bot", "link": "https://create.arduino.cc/projecthub/"},
+            ],
+            "Intermediate": [
+                {"title": "Voice Controlled Robot", "link": "https://www.hackster.io/"},
+                {"title": "Gesture Controlled Car", "link": "https://www.electronicshub.org/gesture-controlled-robot/"},
+            ],
+            "Expert": [
+                {"title": "AI-based Navigation Robot", "link": "https://ros.org/"},
+                {"title": "Humanoid Robot using Raspberry Pi", "link": "https://www.raspberrypi.org/"},
+            ],
+        }
     }
 }
 
@@ -131,83 +149,117 @@ TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Smart Internship & Project Recommender</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-  body {
-    background: url('{{ bg }}') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-  }
-  .overlay {
-    background: rgba(0,0,0,0.75);
-    min-height: 100vh;
-    padding: 40px;
-  }
-  h1 {
-    text-align: center;
-    color: #ffb347;
-    font-weight: bold;
-    text-shadow: 0 0 10px #ffb347, 0 0 20px #ffcc70;
-    animation: glow 2s infinite alternate;
-  }
-  @keyframes glow {
-    from {text-shadow: 0 0 5px #ffcc70;}
-    to {text-shadow: 0 0 20px #ffd700;}
-  }
-  .gif {
-    display: block;
-    margin: 20px auto;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.4);
-  }
-  a { color: #ffcc70; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-</style>
+  <meta charset="UTF-8">
+  <title>Smart Internship & Project Recommender</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
+  <style>
+    body {
+      background-image: url('{{ bg }}');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+    .overlay {
+      background-color: rgba(0,0,0,0.6);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .card {
+      background-color: rgba(0,0,0,0.7);
+      border-radius: 20px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 800px;
+      margin-top: 2rem;
+    }
+    .btn {
+      background-color: #ffb347;
+      color: black;
+      border: none;
+      font-weight: 600;
+    }
+    a { color: #ffcc70; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    #lottie {
+      width: 300px;
+      height: 300px;
+      margin: auto;
+    }
+  </style>
 </head>
 <body>
-<div class="overlay container rounded">
-  <h1>🚀 Smart Internship & Project Recommender</h1>
-  <form method="POST" class="text-center mt-4">
-    <label>Select Domain: </label>
-    <select name="domain" class="form-select d-inline w-auto" required>
-      <option value="">-- Choose Domain --</option>
-      <option value="ai">AI & ML</option>
-      <option value="cloud">Cloud Computing</option>
-      <option value="cybersecurity">Cybersecurity</option>
-      <option value="web">Web Development</option>
-      <option value="devops">DevOps</option>
-    </select>
-    <button class="btn btn-warning ms-2" type="submit">Recommend</button>
-  </form>
+  <div class="overlay">
+    {% if not data %}
+    <!-- Front page Lottie Animation -->
+    <div id="lottie"></div>
+    <h1 class="fw-bold mt-3">🚀 Smart Internship & Project Recommender</h1>
+    <p class="text-light">Explore internships, projects, and certifications tailored to your domain of interest.</p>
+    {% endif %}
 
-  {% if data %}
-  <hr>
-  <img src="{{ data.gif }}" width="400" class="gif">
-  <h2 class="text-center mt-3">{{ domain.upper() }} Recommendations</h2>
+    <div class="card">
+      <form method="POST">
+        <label>Select Your Domain:</label><br>
+        <select name="domain" class="form-select mt-2 mb-3" required>
+          <option value="">-- Choose Domain --</option>
+          <option value="ai">AI & ML</option>
+          <option value="cloud">Cloud Computing</option>
+          <option value="cybersecurity">Cybersecurity</option>
+          <option value="web">Web Development</option>
+          <option value="devops">DevOps</option>
+          <option value="robotics">Robotics</option>
+        </select>
+        <button class="btn btn-warning" type="submit">Recommend</button>
+      </form>
+    </div>
 
-  <h3>Languages & Tools:</h3>
-  <ul>{% for lang in data.languages %}<li>{{ lang }}</li>{% endfor %}</ul>
+    {% if data %}
+    <div class="card mt-4 text-start">
+      <h2>{{ domain.upper() }} Recommendations</h2>
 
-  <h3>Internship Roles:</h3>
-  <ul>{% for role in data.internships %}<li>{{ role }}</li>{% endfor %}</ul>
+      <h3>Languages & Tools:</h3>
+      <ul>{% for lang in data.languages %}<li>{{ lang }}</li>{% endfor %}</ul>
 
-  <h3>Certifications:</h3>
-  <ul>{% for cert in data.certifications %}<li><a href="{{ cert.link }}" target="_blank">{{ cert.name }}</a></li>{% endfor %}</ul>
+      <h3>Internships:</h3>
+      <ul>{% for role in data.internships %}<li>{{ role }}</li>{% endfor %}</ul>
 
-  <h3>Projects by Level:</h3>
-  {% for level, projects in data.projects.items() %}
-    <h4>{{ level }} Level:</h4>
-    <ul>
-    {% for project in projects %}
-      <li><a href="{{ project.link }}" target="_blank">{{ project.title }}</a></li>
-    {% endfor %}
-    </ul>
-  {% endfor %}
+      <h3>Certifications:</h3>
+      <ul>{% for cert in data.certifications %}
+        <li><a href="{{ cert.link }}" target="_blank">{{ cert.name }}</a></li>
+      {% endfor %}</ul>
+
+      <h3>Project Ideas:</h3>
+      {% for level, projects in data.projects.items() %}
+        <h5>{{ level }} Level</h5>
+        <ul>
+          {% for project in projects %}
+            <li><a href="{{ project.link }}" target="_blank">{{ project.title }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  {% if not data %}
+  <script>
+    // Front page Lottie Animation
+    var animation = lottie.loadAnimation({
+      container: document.getElementById('lottie'),
+      path: 'https://lottie.host/eBolNfIgIj/creative-team.json', // replace with your Lottie JSON link
+      renderer: 'svg',
+      loop: true,
+      autoplay: true
+    });
+  </script>
   {% endif %}
-</div>
 </body>
 </html>
 """
