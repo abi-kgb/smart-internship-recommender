@@ -1,11 +1,16 @@
 from flask import Flask, render_template_string, request
-import os
 
 app = Flask(__name__)
 
-# ----------- DATA: INTERNSHIP & PROJECT RECOMMENDATIONS -----------
+# ----------- DATA: INTERNSHIP, PROJECTS, LANGUAGES & CERTIFICATIONS -----------
 recommendations = {
     "web": {
+        "bg": "https://img.freepik.com/free-photo/website-design-concept-with-laptop_23-2149402751.jpg",
+        "languages": ["HTML", "CSS", "JavaScript", "Python (Flask/Django)"],
+        "certifications": [
+            {"name": "W3Schools Web Development", "link": "https://www.w3schools.com/cert/default.asp"},
+            {"name": "freeCodeCamp Responsive Web Design", "link": "https://www.freecodecamp.org/learn/"}
+        ],
         "internships": ["Frontend Developer Intern", "Web Design Intern", "Full Stack Developer Intern"],
         "projects": {
             "Beginner": [
@@ -22,29 +27,41 @@ recommendations = {
             ],
         }
     },
-    "data": {
-        "internships": ["Data Analyst Intern", "Business Intelligence Intern", "ML Assistant Intern"],
+    "ai": {
+        "bg": "https://img.freepik.com/free-photo/futuristic-artificial-intelligence-concept_23-2151701650.jpg",
+        "languages": ["Python", "R"],
+        "certifications": [
+            {"name": "IBM AI Engineering Certificate", "link": "https://www.coursera.org/professional-certificates/ai-engineer"},
+            {"name": "Google AI Fundamentals", "link": "https://developers.google.com/machine-learning/crash-course"}
+        ],
+        "internships": ["AI Research Intern", "ML Assistant Intern"],
         "projects": {
             "Beginner": [
-                {"title": "Data Visualization Dashboard", "link": "https://matplotlib.org/stable/gallery/index.html"},
-                {"title": "Student Result Analysis", "link": "https://pandas.pydata.org/docs/getting_started/index.html"},
+                {"title": "Image Classification using CNN", "link": "https://www.tensorflow.org/tutorials"},
+                {"title": "Chatbot using Python", "link": "https://www.geeksforgeeks.org/python-chatbot-tutorial/"},
             ],
             "Intermediate": [
-                {"title": "Movie Recommendation System", "link": "https://realpython.com/build-recommendation-engine-collaborative-filtering/"},
-                {"title": "Data Cleaning Automation", "link": "https://towardsdatascience.com/data-cleaning-101-4d429e29f9e4"},
+                {"title": "Face Recognition System", "link": "https://realpython.com/face-recognition-with-python/"},
+                {"title": "Text Sentiment Analysis", "link": "https://towardsdatascience.com/sentiment-analysis-python-tutorial-6c36a3a34d4c"},
             ],
             "Expert": [
-                {"title": "Predictive Analytics System", "link": "https://scikit-learn.org/stable/supervised_learning.html"},
-                {"title": "AI-driven Customer Insights", "link": "https://cloud.google.com/ai"},
+                {"title": "AI-based Fraud Detection", "link": "https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud"},
+                {"title": "Autonomous Vehicle Simulation", "link": "https://carla.org/"},
             ],
         }
     },
     "cloud": {
+        "bg": "https://img.freepik.com/free-photo/futuristic-server-room-with-blue-lights_23-2148320284.jpg",
+        "languages": ["Python", "Java", "Bash", "YAML"],
+        "certifications": [
+            {"name": "AWS Cloud Practitioner", "link": "https://aws.amazon.com/certification/certified-cloud-practitioner/"},
+            {"name": "Google Cloud Fundamentals", "link": "https://www.coursera.org/learn/gcp-fundamentals"}
+        ],
         "internships": ["Cloud Engineer Intern", "AWS Trainee", "Azure DevOps Intern"],
         "projects": {
             "Beginner": [
-                {"title": "Cloud File Storage System", "link": "https://aws.amazon.com/s3/"},
                 {"title": "Deploy Flask App on AWS", "link": "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html"},
+                {"title": "Cloud File Storage System", "link": "https://aws.amazon.com/s3/"},
             ],
             "Intermediate": [
                 {"title": "Multi-cloud Backup System", "link": "https://learn.microsoft.com/en-us/azure/"},
@@ -57,6 +74,12 @@ recommendations = {
         }
     },
     "cybersecurity": {
+        "bg": "https://img.freepik.com/free-photo/cyber-security-lock-padlock-icon-protection_53876-119585.jpg",
+        "languages": ["Python", "C", "C++", "Bash"],
+        "certifications": [
+            {"name": "EC-Council Ethical Hacking", "link": "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/"},
+            {"name": "Google Cybersecurity Professional Certificate", "link": "https://www.coursera.org/professional-certificates/google-cybersecurity"}
+        ],
         "internships": ["Network Security Intern", "Ethical Hacking Intern"],
         "projects": {
             "Beginner": [
@@ -72,147 +95,113 @@ recommendations = {
                 {"title": "Penetration Testing Automation", "link": "https://www.kali.org/tools/metasploit-framework/"},
             ],
         }
-    },
-    "gamedev": {
-        "internships": ["Unity Developer Intern", "Game Designer Intern"],
-        "projects": {
-            "Beginner": [
-                {"title": "Snake Game in Python", "link": "https://www.geeksforgeeks.org/snake-game-in-python-using-pygame/"},
-                {"title": "Flappy Bird Clone", "link": "https://github.com/sourabhv/FlapPyBird"},
-            ],
-            "Intermediate": [
-                {"title": "2D Platformer Game", "link": "https://realpython.com/pygame-a-primer/"},
-                {"title": "Multiplayer Game with Python Sockets", "link": "https://www.geeksforgeeks.org/socket-programming-python/"},
-            ],
-            "Expert": [
-                {"title": "3D Shooter Game using Unity", "link": "https://learn.unity.com/"},
-                {"title": "AI-driven Game Bot", "link": "https://www.tensorflow.org/agents"},
-            ],
-        }
-    },
-    "uiux": {
-        "internships": ["UI Designer Intern", "UX Research Intern"],
-        "projects": {
-            "Beginner": [
-                {"title": "Landing Page Prototype", "link": "https://www.figma.com/templates/"},
-                {"title": "Portfolio Website UI", "link": "https://dribbble.com/tags/portfolio"},
-            ],
-            "Intermediate": [
-                {"title": "Mobile App Wireframe Design", "link": "https://www.figma.com/"},
-                {"title": "Dark Mode Web UI", "link": "https://getbootstrap.com/docs/5.3/customize/color-modes/"},
-            ],
-            "Expert": [
-                {"title": "Design System Library", "link": "https://mui.com/material-ui/getting-started/overview/"},
-                {"title": "UX Redesign for Existing App", "link": "https://www.nngroup.com/articles/ux-case-studies/"},
-            ],
-        }
-    },
-    "devops": {
-        "internships": ["DevOps Intern", "Automation Engineer Intern"],
-        "projects": {
-            "Beginner": [
-                {"title": "CI/CD Pipeline Setup", "link": "https://github.com/features/actions"},
-                {"title": "Dockerized Flask App", "link": "https://docs.docker.com/get-started/"},
-            ],
-            "Intermediate": [
-                {"title": "Kubernetes Deployment", "link": "https://kubernetes.io/docs/tutorials/"},
-                {"title": "Monitoring with Prometheus", "link": "https://prometheus.io/docs/introduction/overview/"},
-            ],
-            "Expert": [
-                {"title": "Infrastructure as Code using Terraform", "link": "https://developer.hashicorp.com/terraform/docs"},
-                {"title": "Jenkins CI Pipeline", "link": "https://www.jenkins.io/doc/book/pipeline/"},
-            ],
-        }
-    },
-    "robotics": {
-        "internships": ["Robotics Intern", "Embedded Systems Trainee"],
-        "projects": {
-            "Beginner": [
-                {"title": "Line Following Robot", "link": "https://www.instructables.com/Line-Following-Robot/"},
-                {"title": "Obstacle Avoidance Bot", "link": "https://create.arduino.cc/projecthub/"},
-            ],
-            "Intermediate": [
-                {"title": "Voice Controlled Robot", "link": "https://www.hackster.io/"},
-                {"title": "Gesture Controlled Car", "link": "https://www.electronicshub.org/gesture-controlled-robot/"},
-            ],
-            "Expert": [
-                {"title": "AI-based Navigation Robot", "link": "https://ros.org/"},
-                {"title": "Humanoid Robot using Raspberry Pi", "link": "https://www.raspberrypi.org/"},
-            ],
-        }
     }
 }
 
-# ----------- TEMPLATE -----------
+# ----------- TEMPLATE WITH DYNAMIC BACKGROUND -----------
 TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Smart Internship & Project Recommender</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {font-family: 'Poppins', sans-serif; background: linear-gradient(135deg,#74ebd5,#ACB6E5); min-height: 100vh; padding: 2rem;}
-    .card {border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); padding: 2rem; background: #fff;}
-    .title {color:#2b5876; font-weight:700;}
-    a {text-decoration:none;}
-    a:hover {text-decoration:underline;}
+    body {
+      background-image: url('{{ bg }}');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 40px;
+    }
+    h1, h2, h3 {
+      text-align: center;
+    }
+    a { color: #ffcc70; text-decoration: none; }
+    .card {
+      background-color: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+    }
+    .btn {
+      background-color: #ffb347;
+      color: black;
+      border: none;
+    }
+    select {
+      border-radius: 8px;
+      padding: 8px;
+    }
   </style>
 </head>
 <body>
-
-<div class="container mt-4">
-  <div class="card">
-    <h1 class="text-center title">Smart Internship & Project Recommender</h1>
-    <p class="text-center text-muted">Enter your area of interest below (e.g., AI, Cloud, Cybersecurity, DevOps, Robotics...)</p>
-
-    <form method="POST" class="mb-4">
-      <div class="input-group input-group-lg">
-        <input type="text" name="skills" class="form-control" placeholder="Enter domain name..." required>
-        <button class="btn btn-primary">Recommend</button>
+  <div class="container">
+    <h1>🚀 Smart Internship & Project Recommender</h1>
+    <form method="POST">
+      <div class="text-center mt-4">
+        <label>Select Domain: </label>
+        <select name="domain">
+          <option value="ai">AI & ML</option>
+          <option value="cloud">Cloud Computing</option>
+          <option value="cybersecurity">Cybersecurity</option>
+          <option value="web">Web Development</option>
+        </select>
+        <button class="btn btn-warning btn-sm" type="submit">Recommend</button>
       </div>
     </form>
 
-    {% if recs %}
-      <h3 class="text-success mt-4">Recommended Internships</h3>
-      <ul>{% for i in recs['internships'] %}<li>🌟 {{ i }}</li>{% endfor %}</ul>
-      
-      <h3 class="text-info mt-4">Project Ideas</h3>
-      {% for level, plist in recs['projects'].items() %}
-        <h5 class="mt-3">{{ level }} Level</h5>
-        <ul>
-          {% for p in plist %}
-            <li>💡 <a href="{{ p.link }}" target="_blank">{{ p.title }}</a></li>
-          {% endfor %}
-        </ul>
-      {% endfor %}
-    {% elif not first %}
-      <div class="alert alert-warning mt-3">
-        No matching recommendations found 😕. Try using keywords like <b>web</b>, <b>ai</b>, <b>cloud</b>, <b>data</b>, <b>robotics</b>.
+    {% if data %}
+    <hr>
+    <h2>{{ domain.upper() }} Recommendations</h2>
+    <h3>Languages to Learn:</h3>
+    <ul>{% for lang in data.languages %}<li>{{ lang }}</li>{% endfor %}</ul>
+
+    <h3>Internship Roles:</h3>
+    <ul>{% for role in data.internships %}<li>{{ role }}</li>{% endfor %}</ul>
+
+    <h3>Certifications:</h3>
+    <div class="row">
+      {% for cert in data.certifications %}
+      <div class="col-md-6">
+        <div class="card p-3 mb-2">
+          <a href="{{ cert.link }}" target="_blank">{{ cert.name }}</a>
+        </div>
       </div>
+      {% endfor %}
+    </div>
+
+    <h3>Project Ideas by Level:</h3>
+    {% for level, projects in data.projects.items() %}
+      <h4>{{ level }} Projects:</h4>
+      <ul>
+      {% for project in projects %}
+        <li><a href="{{ project.link }}" target="_blank">{{ project.title }}</a></li>
+      {% endfor %}
+      </ul>
+    {% endfor %}
     {% endif %}
   </div>
-</div>
 </body>
 </html>
 """
 
-# ----------- ROUTE -----------
 @app.route("/", methods=["GET", "POST"])
-def index():
-    recs = None
-    first = True
+def home():
+    domain = None
+    data = None
+    bg = "https://img.freepik.com/free-photo/abstract-network-background_53476-10026.jpg"
     if request.method == "POST":
-        skills = request.form.get("skills", "").lower()
-        first = False
-        for key, val in recommendations.items():
-            if key in skills:
-                recs = val
-                break
-    return render_template_string(TEMPLATE, recs=recs, first=first)
+        domain = request.form["domain"]
+        data = recommendations.get(domain)
+        bg = data["bg"]
+    return render_template_string(TEMPLATE, data=data, domain=domain, bg=bg)
 
-# ----------- RUN -----------
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=5000)
