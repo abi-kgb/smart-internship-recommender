@@ -5,7 +5,8 @@ app = Flask(__name__)
 # ----------- DATA: INTERNSHIP, PROJECTS, LANGUAGES & CERTIFICATIONS -----------
 recommendations = {
     "web": {
-        "bg": "https://img.freepik.com/free-photo/website-design-concept-with-laptop_23-2149402751.jpg",
+        "bg": "https://static.vecteezy.com/system/resources/previews/000/523/309/original/web-development-and-programming-coding-concept-seo-optimization-modern-web-design-on-laptop-screen-vector.jpg",
+        "gif": "https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif",
         "languages": ["HTML", "CSS", "JavaScript", "Python (Flask/Django)"],
         "certifications": [
             {"name": "W3Schools Web Development", "link": "https://www.w3schools.com/cert/default.asp"},
@@ -28,7 +29,8 @@ recommendations = {
         }
     },
     "ai": {
-        "bg": "https://img.freepik.com/free-photo/futuristic-artificial-intelligence-concept_23-2151701650.jpg",
+        "bg": "https://en.sepoin.com/wp-content/uploads/2020/01/AI-ML-4.jpg",
+        "gif": "https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif",
         "languages": ["Python", "R"],
         "certifications": [
             {"name": "IBM AI Engineering Certificate", "link": "https://www.coursera.org/professional-certificates/ai-engineer"},
@@ -51,7 +53,8 @@ recommendations = {
         }
     },
     "cloud": {
-        "bg": "https://img.freepik.com/free-photo/futuristic-server-room-with-blue-lights_23-2148320284.jpg",
+        "bg": "https://cdn.pixabay.com/photo/2024/01/26/08/07/ai-generated-8533603_1280.jpg",
+        "gif": "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif",
         "languages": ["Python", "Java", "Bash", "YAML"],
         "certifications": [
             {"name": "AWS Cloud Practitioner", "link": "https://aws.amazon.com/certification/certified-cloud-practitioner/"},
@@ -74,7 +77,8 @@ recommendations = {
         }
     },
     "cybersecurity": {
-        "bg": "https://img.freepik.com/free-photo/cyber-security-lock-padlock-icon-protection_53876-119585.jpg",
+        "bg": "https://images.wallpapersden.com/image/download/cybersecurity-core_bmdrZ2mUmZqaraWkpJRmbmdsrWZlbWU.jpg",
+        "gif": "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif",
         "languages": ["Python", "C", "C++", "Bash"],
         "certifications": [
             {"name": "EC-Council Ethical Hacking", "link": "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/"},
@@ -95,99 +99,115 @@ recommendations = {
                 {"title": "Penetration Testing Automation", "link": "https://www.kali.org/tools/metasploit-framework/"},
             ],
         }
+    },
+    "devops": {
+        "bg": "https://www.tekcent.com/media/yncjty2t/devops-1600x900-1423173157.jpg",
+        "gif": "https://media.giphy.com/media/fwbzI2kV3Qrlpkh59e/giphy.gif",
+        "languages": ["Python", "Bash", "YAML", "Dockerfile", "Groovy (Jenkins)"],
+        "certifications": [
+            {"name": "Docker & Kubernetes Certification", "link": "https://www.coursera.org/specializations/docker-kubernetes"},
+            {"name": "AWS DevOps Engineer", "link": "https://aws.amazon.com/certification/certified-devops-engineer-professional/"}
+        ],
+        "internships": ["DevOps Intern", "Automation Engineer Intern", "CI/CD Intern"],
+        "projects": {
+            "Beginner": [
+                {"title": "CI/CD Pipeline with GitHub Actions", "link": "https://docs.github.com/en/actions"},
+                {"title": "Dockerized Flask App", "link": "https://docs.docker.com/get-started/"},
+            ],
+            "Intermediate": [
+                {"title": "Kubernetes Deployment", "link": "https://kubernetes.io/docs/tutorials/"},
+                {"title": "Monitoring with Prometheus and Grafana", "link": "https://prometheus.io/docs/introduction/overview/"},
+            ],
+            "Expert": [
+                {"title": "Infrastructure as Code using Terraform", "link": "https://developer.hashicorp.com/terraform/docs"},
+                {"title": "Jenkins CI/CD Pipeline Automation", "link": "https://www.jenkins.io/doc/book/pipeline/"},
+            ],
+        }
     }
 }
 
-# ----------- TEMPLATE WITH DYNAMIC BACKGROUND -----------
+# ----------- HTML TEMPLATE -----------
 TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Smart Internship & Project Recommender</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-image: url('{{ bg }}');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      color: white;
-      font-family: 'Poppins', sans-serif;
-    }
-    .container {
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 20px;
-      padding: 30px;
-      margin-top: 40px;
-    }
-    h1, h2, h3 {
-      text-align: center;
-    }
-    a { color: #ffcc70; text-decoration: none; }
-    .card {
-      background-color: rgba(255,255,255,0.1);
-      border: none;
-      color: white;
-    }
-    .btn {
-      background-color: #ffb347;
-      color: black;
-      border: none;
-    }
-    select {
-      border-radius: 8px;
-      padding: 8px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Smart Internship & Project Recommender</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body {
+    background: url('{{ bg }}') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+  .overlay {
+    background: rgba(0,0,0,0.75);
+    min-height: 100vh;
+    padding: 40px;
+  }
+  h1 {
+    text-align: center;
+    color: #ffb347;
+    font-weight: bold;
+    text-shadow: 0 0 10px #ffb347, 0 0 20px #ffcc70;
+    animation: glow 2s infinite alternate;
+  }
+  @keyframes glow {
+    from {text-shadow: 0 0 5px #ffcc70;}
+    to {text-shadow: 0 0 20px #ffd700;}
+  }
+  .gif {
+    display: block;
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  }
+  a { color: #ffcc70; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>🚀 Smart Internship & Project Recommender</h1>
-    <form method="POST">
-      <div class="text-center mt-4">
-        <label>Select Domain: </label>
-        <select name="domain">
-          <option value="ai">AI & ML</option>
-          <option value="cloud">Cloud Computing</option>
-          <option value="cybersecurity">Cybersecurity</option>
-          <option value="web">Web Development</option>
-        </select>
-        <button class="btn btn-warning btn-sm" type="submit">Recommend</button>
-      </div>
-    </form>
+<div class="overlay container rounded">
+  <h1>🚀 Smart Internship & Project Recommender</h1>
+  <form method="POST" class="text-center mt-4">
+    <label>Select Domain: </label>
+    <select name="domain" class="form-select d-inline w-auto" required>
+      <option value="">-- Choose Domain --</option>
+      <option value="ai">AI & ML</option>
+      <option value="cloud">Cloud Computing</option>
+      <option value="cybersecurity">Cybersecurity</option>
+      <option value="web">Web Development</option>
+      <option value="devops">DevOps</option>
+    </select>
+    <button class="btn btn-warning ms-2" type="submit">Recommend</button>
+  </form>
 
-    {% if data %}
-    <hr>
-    <h2>{{ domain.upper() }} Recommendations</h2>
-    <h3>Languages to Learn:</h3>
-    <ul>{% for lang in data.languages %}<li>{{ lang }}</li>{% endfor %}</ul>
+  {% if data %}
+  <hr>
+  <img src="{{ data.gif }}" width="400" class="gif">
+  <h2 class="text-center mt-3">{{ domain.upper() }} Recommendations</h2>
 
-    <h3>Internship Roles:</h3>
-    <ul>{% for role in data.internships %}<li>{{ role }}</li>{% endfor %}</ul>
+  <h3>Languages & Tools:</h3>
+  <ul>{% for lang in data.languages %}<li>{{ lang }}</li>{% endfor %}</ul>
 
-    <h3>Certifications:</h3>
-    <div class="row">
-      {% for cert in data.certifications %}
-      <div class="col-md-6">
-        <div class="card p-3 mb-2">
-          <a href="{{ cert.link }}" target="_blank">{{ cert.name }}</a>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
+  <h3>Internship Roles:</h3>
+  <ul>{% for role in data.internships %}<li>{{ role }}</li>{% endfor %}</ul>
 
-    <h3>Project Ideas by Level:</h3>
-    {% for level, projects in data.projects.items() %}
-      <h4>{{ level }} Projects:</h4>
-      <ul>
-      {% for project in projects %}
-        <li><a href="{{ project.link }}" target="_blank">{{ project.title }}</a></li>
-      {% endfor %}
-      </ul>
+  <h3>Certifications:</h3>
+  <ul>{% for cert in data.certifications %}<li><a href="{{ cert.link }}" target="_blank">{{ cert.name }}</a></li>{% endfor %}</ul>
+
+  <h3>Projects by Level:</h3>
+  {% for level, projects in data.projects.items() %}
+    <h4>{{ level }} Level:</h4>
+    <ul>
+    {% for project in projects %}
+      <li><a href="{{ project.link }}" target="_blank">{{ project.title }}</a></li>
     {% endfor %}
-    {% endif %}
-  </div>
+    </ul>
+  {% endfor %}
+  {% endif %}
+</div>
 </body>
 </html>
 """
@@ -200,7 +220,8 @@ def home():
     if request.method == "POST":
         domain = request.form["domain"]
         data = recommendations.get(domain)
-        bg = data["bg"]
+        if data:
+            bg = data["bg"]
     return render_template_string(TEMPLATE, data=data, domain=domain, bg=bg)
 
 if __name__ == "__main__":
