@@ -179,16 +179,10 @@ TEMPLATE = """
       width: 90%;
       max-width: 800px;
       margin-top: 2rem;
-      color: #ffffff;  /* white text for all domains */
+      color: #ffffff;
     }
-    h2, h3, h4, h5 {
-      color: #ffffff;  /* white headings */
-    }
-    a { 
-      color: {% if domain=='ai' %}#ffff99{% elif domain=='web' %}#00bfff{% elif domain=='cloud' %}#00ffff{% elif domain=='cybersecurity' %}#ff6347{% elif domain=='devops' %}#7CFC00{% elif domain=='robotics' %}#ff69b4{% else %}#ffcc70{% endif %};
-      text-decoration: none; 
-      font-weight: 600;
-    }
+    h2, h3, h4, h5 { color: #ffffff; }
+    a { color: #00ffff; text-decoration: none; font-weight: 600; }
     a:hover { text-decoration: underline; }
     .btn {
       background-color: #ffb347;
@@ -196,21 +190,15 @@ TEMPLATE = """
       border: none;
       font-weight: 600;
     }
-    #lottie {
-      width: 300px;
-      height: 300px;
-      margin: auto;
-    }
-</style>
-
+    #lottie { width: 300px; height: 300px; margin: auto; }
+  </style>
 </head>
 <body>
   <div class="overlay">
     {% if not data %}
-    <!-- Front page Lottie Animation -->
-    <div id="lottie"></div>
-    <h1 class="fw-bold mt-3">🚀 Smart Internship & Project Recommender</h1>
-    <p class="text-light">Explore internships, projects, and certifications tailored to your domain of interest.</p>
+      <div id="lottie"></div>
+      <h1 class="fw-bold mt-3">🚀 Smart Internship & Project Recommender</h1>
+      <p class="text-light">Explore internships, projects, and certifications tailored to your domain of interest.</p>
     {% endif %}
 
     <div class="card">
@@ -259,10 +247,9 @@ TEMPLATE = """
 
   {% if not data %}
   <script>
-    // Front page Lottie Animation
     var animation = lottie.loadAnimation({
       container: document.getElementById('lottie'),
-      path: 'https://lottie.host/eBolNfIgIj/creative-team.json', // replace with your Lottie JSON link
+      path: 'https://lottie.host/eBolNfIgIj/creative-team.json',
       renderer: 'svg',
       loop: true,
       autoplay: true
@@ -277,12 +264,12 @@ TEMPLATE = """
 def home():
     domain = None
     data = None
-    bg = "https://img.freepik.com/free-photo/abstract-network-background_53476-10026.jpg"
+    bg = "https://wallpapercave.com/wp/wp6351051.jpg"  # front page background
     if request.method == "POST":
         domain = request.form["domain"]
         data = recommendations.get(domain)
         if data:
-            bg = data["bg"]
+            bg = data["bg"]  # change to domain bg after selection
     return render_template_string(TEMPLATE, data=data, domain=domain, bg=bg)
 
 if __name__ == "__main__":
